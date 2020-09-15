@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import logo from './images/instagram-logo.png';
+
+import Post from './components/Post';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <div className='app-header'>
+        <img className='app-header-image' src={logo} alt='instagram logo' />
+      </div>
+      <Post />
+
+      {/* Posts */}
+      {/* Post */}
     </div>
   );
 }
