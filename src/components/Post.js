@@ -1,7 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import { db } from '../database/firebase';
+import firebase from 'firebase';
 
-const Post = () => {
+const Post = ({ postId, user, username, caption, imageUrl }) => {
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    let unsubscribe;
+    if (postId) {
+      unsubscribe = db
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+          setComments(snapshot.docs.map((doc) => doc.data()));
+        });
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [postId]);
+
+  const postComment = (e) => {
+    e.preventDefault();
+
+    db.collection('posts').doc(postId).collection('comments').add({
+      text: comment,
+      username: user.displayName,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    setComment('');
+  };
+
   return (
     <div className='post'>
       <div className='post-header'>
@@ -10,18 +43,42 @@ const Post = () => {
           alt='username'
           src='/static/images/avatar/1.jpg'
         />
-        <h3>Username</h3>
+        <h3>{username}</h3>
       </div>
 
-      <img
-        className='post-image'
-        src='http://lorempixel.com/600/300/sports/'
-        alt='random picture'
-      />
+      <img className='post-image' src={imageUrl} alt='random picture' />
+
       <p className='post-text'>
-        <strong>Username:</strong> Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Id, neque?
+        <strong>{username}:</strong> {caption}
       </p>
+
+      <div className='post-comments'>
+        {comments.map((comment) => (
+          <p>
+            <strong>{comment.username}</strong> {comment.text}
+          </p>
+        ))}
+      </div>
+
+      {user && (
+        <form className='post-comment-box'>
+          <input
+            className='post-input'
+            type='text'
+            placeholder='Add a comment'
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button
+            className='post-button'
+            disabled={!comment}
+            type='submit'
+            onClick={postComment}
+          >
+            Post
+          </button>
+        </form>
+      )}
     </div>
   );
 };
