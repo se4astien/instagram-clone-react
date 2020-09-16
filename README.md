@@ -13,3 +13,5 @@
 https://instagram-clone-react-9fbeb.web.app/
 
 ## Screenshot
+
+<img src="https://github.com/se4astien/instagram-clone-react/blob/master/src/screenshot-instagram.png" alt="screenshot instagram picture" width="80%"/>
