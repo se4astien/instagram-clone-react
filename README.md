@@ -8,6 +8,15 @@
     <li>Real-time database with Firebase’s Firestore</li>
 </ul>
 
+## Project Specifications
+
+- [x] Create UI
+- [x] Using firebase to save data
+- [x] Possibility to sign up, login and logout
+- [x] Write a comment or publish a post when you are connected only
+- [x] Upload a picture with help of a progress bar
+- [x] Comments and posts real-time with firebase server
+
 ## Online
 
 https://instagram-clone-react-9fbeb.web.app/
