@@ -1,4 +1,4 @@
-## Instagram App Clone React
+## Instagram App Clone React with Firebase
 
 <ul>
     <li>Building a Instagram Clone App</li>
